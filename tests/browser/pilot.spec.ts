@@ -44,6 +44,14 @@ test("desktop dashboard, all admin screens and screenshots", async ({
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/");
+  await expect(
+    page.getByRole("heading", { name: /Werk dat je/ }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: ".data/screens/landing-desktop.png",
+    fullPage: true,
+  });
   await demo(page, "Beheer");
   await expect(page.getByText("DEMO · fictieve gegevens")).toBeVisible();
   await page.screenshot({

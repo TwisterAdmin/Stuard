@@ -19,6 +19,8 @@
     "demo:built": "DEMO_MODE=true NODE_ENV=demo node server/index.js"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource/archivo-black": "^5.3.0",
     "express": "^5.1.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",

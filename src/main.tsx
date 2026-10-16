@@ -56,7 +56,11 @@ import {
   FileText,
   HeartHandshake,
 } from "lucide-react";
+import "@fontsource/archivo-black/latin.css";
+import "@fontsource-variable/dm-sans";
 import "./styles.css";
+import "./student-theme.css";
+import Landing from "./Landing";
 
 type Row = Record<string, any>;
 type User = {
@@ -491,7 +495,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={user ? <Navigate to="/app" replace /> : <Landing />}
+              element={<Landing settings={meta.settings} signedIn={!!user} />}
             />
             <Route
               path="/login"
@@ -760,146 +764,6 @@ function Shell() {
   );
 }
 
-function Landing() {
-  const { meta } = useContext(Session);
-  return (
-    <div className="landing">
-      <nav className="landing-nav">
-        <Brand />
-        <div>
-          <a href="#werkwijze">Zo werkt het</a>
-          <a href="#aanbod">Het aanbod</a>
-          <Link to="/login">Inloggen</Link>
-          <Link className="button" to="/register">
-            Doe mee <ArrowUpRight size={17} />
-          </Link>
-        </div>
-      </nav>
-      <main>
-        <section className="landing-hero">
-          <div>
-            <p className="eyebrow">
-              <span className="tiny-dot" /> VOOR STUDENTEN EN KLEINE BEDRIJVEN
-            </p>
-            <h1>
-              Werk dat je
-              <br />
-              verder <span>brengt.</span>
-            </h1>
-            <p>
-              Echte ervaring voor jou. Een frisse blik voor je bedrijf. Stuard
-              brengt jullie samen voor betaald praktijkwerk, met begeleiding die
-              het verschil maakt.
-            </p>
-            <div className="actions">
-              <Link className="button" to="/register?role=student">
-                Ik ben student <ArrowUpRight size={17} />
-              </Link>
-              <Link className="button secondary" to="/register?role=company">
-                Ik heb een bedrijf <ArrowUpRight size={17} />
-              </Link>
-            </div>
-            <div className="hero-caption">
-              <MapPin size={16} /> We beginnen in{" "}
-              {meta.settings?.region || "Gent"} <span>•</span> Marketing & sales
-            </div>
-          </div>
-          <div className="hero-art" aria-hidden="true">
-            <div className="art-label">
-              EEN FRISSE BLIK.
-              <br />
-              EEN ECHTE KANS.
-            </div>
-            <div className="art-circle" />
-            <div className="art-red" />
-            <div className="art-dark" />
-            <div className="art-card">
-              <span>Van leren naar doen</span>
-              <ArrowUpRight />
-              <strong>
-                Jouw volgende
-                <br />
-                stap begint hier.
-              </strong>
-            </div>
-            <span className="art-star">
-              <GrowthMark />
-            </span>
-          </div>
-        </section>
-        <section className="landing-section" id="werkwijze">
-          <p className="eyebrow">ZO WERKT STUARD</p>
-          <h2>Een goede match is pas het begin.</h2>
-          <div className="three-columns">
-            {[
-              [
-                "01",
-                "We leren je kennen",
-                "Je talenten, je werk of je ambities. We beginnen met een persoonlijke intake.",
-              ],
-              [
-                "02",
-                "We verbinden",
-                "Een helder werkpakket en een passende student. Jullie kiezen allebei of het klopt.",
-              ],
-              [
-                "03",
-                "We groeien samen",
-                "Acht weken betaald meewerken, concrete feedback en een portfolio om op verder te bouwen.",
-              ],
-            ].map(([n, title, body]) => (
-              <article className="step-card" key={n}>
-                <span>{n}</span>
-                <h3>{title}</h3>
-                <p>{body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section className="pricing-block" id="aanbod">
-          <div>
-            <p className="eyebrow">DUIDELIJK VANAF HET BEGIN</p>
-            <h2>
-              Voor studenten gratis.
-              <br />
-              Voor bedrijven helder.
-            </h2>
-            <p>
-              De student komt rechtstreeks in dienst bij het bedrijf. Stuard
-              verzorgt selectie en opvolging. Loon en werkgeverskosten staan los
-              van onze dienstverlening.
-            </p>
-          </div>
-          <div className="price-card">
-            <span>PILOTAANBOD</span>
-            <h3>
-              {money(meta.settings?.setup_cents ?? 35000)}{" "}
-              <small>opstart</small>
-            </h3>
-            <h3>
-              {money(meta.settings?.monthly_cents ?? 19500)}{" "}
-              <small>/ actieve maand</small>
-            </h3>
-            <p>
-              Exclusief btw en loonkosten. Prijzen worden tijdens de pilot
-              geëvalueerd.
-            </p>
-            <Link to="/register?role=company" className="text-link">
-              Vertel ons over je bedrijf <ArrowRight size={17} />
-            </Link>
-          </div>
-        </section>
-      </main>
-      <footer className="landing-footer">
-        <Brand />
-        <p>Betaalde praktijkervaring. Menselijke begeleiding.</p>
-        <Link to="/login">
-          Naar de werkplek <ArrowUpRight size={16} />
-        </Link>
-      </footer>
-    </div>
-  );
-}
 function Auth({ register = false }: { register?: boolean }) {
   const { setUser, meta } = useContext(Session),
     notify = useContext(ToastContext);
