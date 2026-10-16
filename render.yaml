@@ -1,0 +1,23 @@
+# Demo only: shared fictitious data, no production personal data.
+# This template creates a free service without persistent storage.
+services:
+  - type: web
+    name: stuard-demo
+    runtime: node
+    branch: main
+    plan: free
+    autoDeployTrigger: "off"
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node server/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0
+      - key: NODE_ENV
+        value: demo
+      - key: DEMO_MODE
+        value: "true"
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: DATABASE_PATH
+        value: /tmp/stuard-demo.sqlite
